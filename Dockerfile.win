@@ -1,0 +1,34 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV WINEPREFIX=/root/.wine
+ENV DISPLAY=:0
+
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        wget curl ca-certificates unzip cabextract \
+        wine wine64 wine32 x11vnc xvfb \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# 下载 Python 3.11 Windows embeddable + pip
+RUN mkdir -p /opt/winpython && cd /opt/winpython && \
+    wget -q https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip && \
+    unzip python-3.11.9-embed-amd64.zip && \
+    rm python-3.11.9-embed-amd64.zip && \
+    wget -q https://bootstrap.pypa.io/get-pip.py && \
+    sed -i 's/#import site/import site/' python311._pth
+
+# 安装 pip
+RUN wine /opt/winpython/python.exe /opt/winpython/get-pip.py --no-warn-script-location 2>/dev/null || \
+    (cd /opt/winpython && wine python.exe get-pip.py --no-warn-script-location)
+
+WORKDIR /build
+COPY . /build/
+
+# 安装依赖
+RUN wine /opt/winpython/python.exe -m pip install --no-warn-script-location \
+    pyinstaller numpy opencv-python pillow pillow-heif matplotlib scikit-image
+
+# 构建
+CMD ["wine", "/opt/winpython/python.exe", "-m", "PyInstaller", "build.spec", "--clean", "--noconfirm"]
