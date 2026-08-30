@@ -6,8 +6,16 @@ import time
 from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
-from tkinter import BOTH, LEFT, RIGHT, X, Canvas, filedialog, messagebox, ttk
-import tkinter as tk
+try:
+    from tkinter import BOTH, LEFT, RIGHT, X, Canvas, filedialog, messagebox, ttk
+    import tkinter as tk
+    _HAS_TKINTER = True
+    _TkBase = tk.Tk
+except ImportError:
+    _HAS_TKINTER = False
+    class _TkBase:
+        """Dummy base class when tkinter is not available"""
+        pass
 from typing import Callable, Dict, Optional, Tuple, Union
 
 import cv2
@@ -26,7 +34,11 @@ except ImportError:
 
 import matplotlib
 import numpy as np
-from PIL import Image, ImageOps, ImageTk
+from PIL import Image, ImageOps
+try:
+    from PIL import ImageTk
+except ImportError:
+    pass
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from skimage.filters import threshold_otsu
@@ -737,7 +749,7 @@ def analyze(pre_raw: np.ndarray, post_raw: np.ndarray, mode: str = "face") -> An
     )
 
 
-class SkinRecoveryApp(tk.Tk):
+class SkinRecoveryApp(_TkBase):
     def __init__(self) -> None:
         super().__init__()
         self.title(APP_TITLE)
@@ -1200,6 +1212,9 @@ class SkinRecoveryApp(tk.Tk):
 
 
 def main() -> None:
+    if not _HAS_TKINTER:
+        print("错误: tkinter 未安装，无法启动桌面版。请使用 web_app.py 启动网页版。")
+        return
     app = SkinRecoveryApp()
     app.mainloop()
 
