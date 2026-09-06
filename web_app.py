@@ -64,13 +64,72 @@ INDEX_HTML = r"""<!doctype html>
   <title>Skin Recovery Assessor</title>
   {{THREE_JS_PLACEHOLDER}}
   <style>
+    :root {
+      --bg: #081019; --panel-bg: #111b27; --panel-border: #243449;
+      --text: #eaf2ff; --text-muted: #91a6bc;
+      --mode-border: #2b3d53; --mode-bg: #0b141f; --mode-text: #dcecff;
+      --mode-active-border: #37d5ff; --mode-active-bg: #0d3140;
+      --upload-border: #3b536e; --upload-bg: #0b141f; --file-name: #f7d154;
+      --btn-bg: #1f9fca; --btn-disabled: #536576;
+      --log-bg: #07101a; --log-border: #223247; --log-text: #bdefff;
+      --preview-bg: #07101a; --preview-border: #223247; --preview-text: #60768e;
+      --progress-text: #a9bfd7; --bar-bg: #07101a; --bar-border: #223247;
+      --fill-start: #37d5ff; --fill-end: #f7d154;
+      --hero-bg: #07101a; --hero-border: #223247; --hero-text: #60768e;
+      --scan-color: #37d5ff; --score-color: #37d5ff; --verdict-color: #dce8f4;
+      --radar-bg: #07101a; --radar-border: #223247;
+      --th-color: #9fb7cf; --td-color: #eaf2ff; --td-border: #243449;
+      --pipe-bg: rgba(7,16,26,.78); --pipe-border: #2b3d53;
+      --pipe-index: #f7d154; --pipe-title: #ffffff; --pipe-desc: #91a6bc;
+      --pipe-img-bg: #07101a; --pipe-img-border: #2b3d53; --pipe-done: #2ecc71;
+      --pipe-label: #60768e; --accent-rgb: 55,213,255;
+      --pipeline-g1: #07101a; --pipeline-g2: #101b28;
+      --model-inner: #0a1825; --model-outer: #06111c; --model-border: #223247;
+      --model-glow: rgba(55,213,255,.15); --model-inner-glow: rgba(55,213,255,.05);
+      --model-ph: #60768e;
+      --ctrl-bg: rgba(7,16,26,.8); --ctrl-border: #2b3d53; --ctrl-text: #91a6bc;
+      --ctrl-h-border: #37d5ff; --ctrl-h-text: #fff;
+      --ctrl-a-border: #37d5ff; --ctrl-a-bg: rgba(55,213,255,.15); --ctrl-a-text: #37d5ff;
+      --hud-text: #cfe9ff; --hud-bg: rgba(7,16,26,.72); --hud-border: #2b3d53;
+      --badge-bg: rgba(7,16,26,.88); --clear-color: #06111c;
+      --theme-text: #eaf2ff; --theme-bg: #111b27; --theme-border: #2b3d53;
+    }
+    body.light {
+      --bg: #f0f2f5; --panel-bg: #ffffff; --panel-border: #d0d5dd;
+      --text: #1e293b; --text-muted: #64748b;
+      --mode-border: #cbd5e1; --mode-bg: #f8fafc; --mode-text: #334155;
+      --mode-active-border: #2980b9; --mode-active-bg: #dbeafe;
+      --upload-border: #94a3b8; --upload-bg: #f8fafc; --file-name: #d97706;
+      --btn-bg: #2980b9; --btn-disabled: #94a3b8;
+      --log-bg: #f8fafc; --log-border: #cbd5e1; --log-text: #334155;
+      --preview-bg: #f8fafc; --preview-border: #cbd5e1; --preview-text: #94a3b8;
+      --progress-text: #475569; --bar-bg: #e2e8f0; --bar-border: #cbd5e1;
+      --fill-start: #2980b9; --fill-end: #d97706;
+      --hero-bg: #f8fafc; --hero-border: #cbd5e1; --hero-text: #94a3b8;
+      --scan-color: #2980b9; --score-color: #2980b9; --verdict-color: #334155;
+      --radar-bg: #f8fafc; --radar-border: #cbd5e1;
+      --th-color: #475569; --td-color: #1e293b; --td-border: #e2e8f0;
+      --pipe-bg: #ffffff; --pipe-border: #cbd5e1;
+      --pipe-index: #d97706; --pipe-title: #1e293b; --pipe-desc: #64748b;
+      --pipe-img-bg: #f8fafc; --pipe-img-border: #cbd5e1; --pipe-done: #16a34a;
+      --pipe-label: #94a3b8; --accent-rgb: 41,128,185;
+      --pipeline-g1: #f8fafc; --pipeline-g2: #f1f5f9;
+      --model-inner: #f1f5f9; --model-outer: #e2e8f0; --model-border: #cbd5e1;
+      --model-glow: rgba(41,128,185,.12); --model-inner-glow: rgba(41,128,185,.05);
+      --model-ph: #94a3b8;
+      --ctrl-bg: rgba(255,255,255,.85); --ctrl-border: #cbd5e1; --ctrl-text: #64748b;
+      --ctrl-h-border: #2980b9; --ctrl-h-text: #1e293b;
+      --ctrl-a-border: #2980b9; --ctrl-a-bg: rgba(41,128,185,.1); --ctrl-a-text: #2980b9;
+      --hud-text: #334155; --hud-bg: rgba(255,255,255,.8); --hud-border: #cbd5e1;
+      --badge-bg: rgba(248,250,252,.92); --clear-color: #e2e8f0;
+      --theme-text: #1e293b; --theme-bg: #ffffff; --theme-border: #cbd5e1;
+    }
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      color: #eaf2ff;
-      background: #081019;
+      margin: 0; min-height: 100vh;
+      color: var(--text); background: var(--bg);
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      transition: background .35s, color .35s;
     }
     .app {
       min-height: 100vh;
@@ -80,62 +139,80 @@ INDEX_HTML = r"""<!doctype html>
       padding: 18px;
     }
     .sidebar, .panel {
-      background: #111b27;
-      border: 1px solid #243449;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
       border-radius: 8px;
+      transition: background .35s, border-color .35s;
     }
     .sidebar { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
     h1 { margin: 0; font-size: 25px; letter-spacing: 0; }
     h2 { margin: 0 0 12px; font-size: 16px; }
-    .muted { color: #91a6bc; line-height: 1.55; font-size: 13px; }
+    .muted { color: var(--text-muted); line-height: 1.55; font-size: 13px; }
     .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .mode {
-      border: 1px solid #2b3d53;
-      background: #0b141f;
-      color: #dcecff;
+      border: 1px solid var(--mode-border);
+      background: var(--mode-bg);
+      color: var(--mode-text);
       border-radius: 8px;
       padding: 12px;
       cursor: pointer;
       text-align: center;
       font-weight: 700;
+      transition: all .25s;
     }
-    .mode.active { border-color: #37d5ff; background: #0d3140; color: white; }
+    .mode.active { border-color: var(--mode-active-border); background: var(--mode-active-bg); color: white; }
+    .species-wrap { display: none; margin-top: 8px; gap: 6px; }
+    .species-wrap.visible { display: block; }
+    .species-wrap label { font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 2px; }
+    .species-wrap select {
+      width: 100%; padding: 7px 10px; border-radius: 7px;
+      border: 1px solid var(--mode-border); background: var(--mode-bg); color: var(--mode-text);
+      font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 6px;
+    }
+    .dressing-wrap { margin-top: 6px; }
+    .dressing-wrap label { font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 2px; }
+    .dressing-wrap select {
+      width: 100%; padding: 7px 10px; border-radius: 7px;
+      border: 1px solid var(--mode-border); background: var(--mode-bg); color: var(--mode-text);
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .dressing-wrap select:disabled { opacity: 0.45; cursor: not-allowed; }
     .upload { display: grid; gap: 8px; }
     .upload label {
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 44px;
-      border: 1px dashed #3b536e;
+      border: 1px dashed var(--upload-border);
       border-radius: 8px;
-      background: #0b141f;
-      color: #dcecff;
+      background: var(--upload-bg);
+      color: var(--mode-text);
       cursor: pointer;
       font-weight: 700;
     }
     input[type="file"] { display: none; }
-    .file-name { color: #f7d154; font-size: 12px; overflow-wrap: anywhere; }
+    .file-name { color: var(--file-name); font-size: 12px; overflow-wrap: anywhere; }
     button.primary {
       width: 100%;
       border: 0;
       border-radius: 8px;
-      background: #1f9fca;
+      background: var(--btn-bg);
       color: white;
       font-size: 16px;
       font-weight: 800;
       padding: 14px 16px;
       cursor: pointer;
     }
-    button.primary:disabled { background: #536576; cursor: wait; }
+    button.primary:disabled { background: var(--btn-disabled); cursor: wait; }
     .log {
       min-height: 170px;
       max-height: 230px;
       overflow: auto;
       padding: 10px;
-      background: #07101a;
-      border: 1px solid #223247;
+      background: var(--log-bg);
+      border: 1px solid var(--log-border);
       border-radius: 8px;
-      color: #bdefff;
+      color: var(--log-text);
       font: 12px/1.55 Menlo, Consolas, monospace;
       white-space: pre-wrap;
     }
@@ -149,14 +226,14 @@ INDEX_HTML = r"""<!doctype html>
     .preview {
       width: 100%;
       height: 260px;
-      background: #07101a;
-      border: 1px solid #223247;
+      background: var(--preview-bg);
+      border: 1px solid var(--preview-border);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      color: #60768e;
+      color: var(--preview-text);
       font-weight: 800;
     }
     .preview img { width: 100%; height: 100%; object-fit: contain; }
@@ -167,12 +244,12 @@ INDEX_HTML = r"""<!doctype html>
       top: -40px; height: 40px;
       background: linear-gradient(180deg,
         transparent 0%,
-        rgba(55,213,255,.04) 30%,
-        rgba(55,213,255,.12) 60%,
-        rgba(0,255,204,.18) 85%,
-        #37d5ff 98%,
-        #00ffcc 100%);
-      box-shadow: 0 2px 30px rgba(55,213,255,.5), 0 2px 80px rgba(55,213,255,.2);
+        rgba(var(--accent-rgb),.04) 30%,
+        rgba(var(--accent-rgb),.12) 60%,
+        rgba(var(--accent-rgb),.18) 85%,
+        var(--scan-color) 98%,
+        var(--scan-color) 100%);
+      box-shadow: 0 2px 30px rgba(var(--accent-rgb),.5), 0 2px 80px rgba(var(--accent-rgb),.2);
       animation: scanSweep 2.2s ease-in-out infinite;
       z-index: 10; pointer-events: none;
     }
@@ -180,7 +257,7 @@ INDEX_HTML = r"""<!doctype html>
       content: ""; position: absolute; inset: 0;
       background: repeating-linear-gradient(0deg,
         transparent 0px, transparent 2px,
-        rgba(55,213,255,.015) 2px, rgba(55,213,255,.015) 3px);
+        rgba(var(--accent-rgb),.015) 2px, rgba(var(--accent-rgb),.015) 3px);
       z-index: 5; pointer-events: none;
       animation: scanCRT 3s linear infinite;
     }
@@ -196,22 +273,22 @@ INDEX_HTML = r"""<!doctype html>
     }
     .preview .scan-badge {
       position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-      background: rgba(7, 16, 26, .88); border: 1px solid #37d5ff;
+      background: var(--badge-bg); border: 1px solid var(--scan-color);
       border-radius: 4px; padding: 5px 16px;
-      color: #37d5ff; font-size: 11px; font-weight: 700;
+      color: var(--scan-color); font-size: 11px; font-weight: 700;
       z-index: 11; display: none; letter-spacing: 2px;
       animation: badgePulse 1.2s ease infinite;
       text-transform: uppercase;
     }
     .preview.scanning .scan-badge { display: block; }
     @keyframes badgePulse {
-      0%, 100% { box-shadow: 0 0 8px rgba(55,213,255,.3); opacity: .85; }
-      50% { box-shadow: 0 0 22px rgba(55,213,255,.7); opacity: 1; }
+      0%, 100% { box-shadow: 0 0 8px rgba(var(--accent-rgb),.3); opacity: .85; }
+      50% { box-shadow: 0 0 22px rgba(var(--accent-rgb),.7); opacity: 1; }
     }
     .progress-wrap { display: grid; gap: 10px; }
-    .progress-line { display: flex; justify-content: space-between; color: #a9bfd7; font-size: 13px; }
-    .bar { height: 10px; background: #07101a; border-radius: 999px; border: 1px solid #223247; overflow: hidden; }
-    .fill { width: 0%; height: 100%; background: linear-gradient(90deg, #37d5ff, #f7d154); transition: width .25s ease; }
+    .progress-line { display: flex; justify-content: space-between; color: var(--progress-text); font-size: 13px; }
+    .bar { height: 10px; background: var(--bar-bg); border-radius: 999px; border: 1px solid var(--bar-border); overflow: hidden; }
+    .fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--fill-start), var(--fill-end)); transition: width .25s ease; }
     .result-grid {
       display: grid;
       grid-template-columns: 1.05fr .95fr;
@@ -221,14 +298,14 @@ INDEX_HTML = r"""<!doctype html>
     .hero-result {
       position: relative;
       height: 420px;
-      background: #07101a;
-      border: 1px solid #223247;
+      background: var(--hero-bg);
+      border: 1px solid var(--hero-border);
       border-radius: 8px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #60768e;
+      color: var(--hero-text);
       font-weight: 800;
     }
     .hero-result img { width: 100%; height: 100%; object-fit: contain; }
@@ -238,8 +315,8 @@ INDEX_HTML = r"""<!doctype html>
       bottom: 0;
       width: 2px;
       left: 0;
-      background: #37d5ff;
-      box-shadow: 0 0 18px #37d5ff;
+      background: var(--scan-color);
+      box-shadow: 0 0 18px var(--scan-color);
       animation: scan 1.6s linear infinite;
       display: none;
     }
@@ -251,19 +328,19 @@ INDEX_HTML = r"""<!doctype html>
       gap: 14px;
       align-items: center;
     }
-    .score-number { font-size: 52px; color: #37d5ff; font-weight: 900; }
-    .verdict { color: #dce8f4; line-height: 1.6; }
+    .score-number { font-size: 52px; color: var(--score-color); font-weight: 900; }
+    .verdict { color: var(--verdict-color); line-height: 1.6; }
     .radar-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;
     }
     .radar-box { text-align: center; }
-    .radar-box img { width: 100%; max-height: 280px; object-fit: contain; background: #07101a; border-radius: 8px; border: 1px solid #223247; }
-    .radar-box .radar-label { color: #91a6bc; font-size: 12px; margin-top: 6px; font-weight: 700; }
-    .radar img { width: 100%; max-height: 300px; object-fit: contain; background: #07101a; border-radius: 8px; }
+    .radar-box img { width: 100%; max-height: 280px; object-fit: contain; background: var(--radar-bg); border-radius: 8px; border: 1px solid var(--radar-border); }
+    .radar-box .radar-label { color: var(--text-muted); font-size: 12px; margin-top: 6px; font-weight: 700; }
+    .radar img { width: 100%; max-height: 300px; object-fit: contain; background: var(--radar-bg); border-radius: 8px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th, td { padding: 10px 8px; border-bottom: 1px solid #243449; text-align: left; }
-    th { color: #9fb7cf; font-weight: 800; }
-    td { color: #eaf2ff; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--td-border); text-align: left; }
+    th { color: var(--th-color); font-weight: 800; }
+    td { color: var(--td-color); }
 
     .analysis-lab {
       display: grid;
@@ -274,9 +351,9 @@ INDEX_HTML = r"""<!doctype html>
       position: relative;
       overflow: visible;
       background:
-        radial-gradient(circle at 22% 18%, rgba(55, 213, 255, .16), transparent 24%),
-        linear-gradient(135deg, #07101a, #101b28 55%, #07101a);
-      border: 1px solid #223247;
+        radial-gradient(circle at 22% 18%, rgba(var(--accent-rgb), .16), transparent 24%),
+        linear-gradient(135deg, var(--pipeline-g1), var(--pipeline-g2) 55%, var(--pipeline-g1));
+      border: 1px solid var(--preview-border);
       border-radius: 8px;
     }
     .pipeline-track {
@@ -290,18 +367,18 @@ INDEX_HTML = r"""<!doctype html>
     .pipe-step {
       position: relative;
       padding: 10px;
-      border: 1px solid #2b3d53;
+      border: 1px solid var(--pipe-border);
       border-radius: 8px;
-      background: rgba(7, 16, 26, .78);
+      background: var(--pipe-bg);
       overflow: visible;
     }
     .pipe-step.active {
-      border-color: #37d5ff;
-      box-shadow: inset 0 0 24px rgba(55, 213, 255, .18), 0 0 20px rgba(55, 213, 255, .10);
+      border-color: var(--scan-color);
+      box-shadow: inset 0 0 24px rgba(var(--accent-rgb), .18), 0 0 20px rgba(var(--accent-rgb), .10);
     }
-    .pipe-index { color: #f7d154; font-weight: 900; font-size: 12px; }
-    .pipe-title { margin-top: 8px; font-weight: 900; color: #ffffff; font-size: 14px; }
-    .pipe-desc { margin-top: 8px; color: #91a6bc; line-height: 1.45; font-size: 12px; }
+    .pipe-index { color: var(--pipe-index); font-weight: 900; font-size: 12px; }
+    .pipe-title { margin-top: 8px; font-weight: 900; color: var(--pipe-title); font-size: 14px; }
+    .pipe-desc { margin-top: 8px; color: var(--pipe-desc); line-height: 1.45; font-size: 12px; }
     .pipe-step::after {
       content: "";
       position: absolute;
@@ -309,63 +386,63 @@ INDEX_HTML = r"""<!doctype html>
       top: 0;
       width: 55%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(55, 213, 255, .28), transparent);
+      background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), .28), transparent);
       transform: skewX(-15deg);
     }
     .pipe-step.active::after { animation: sweep 1.2s ease infinite; }
     @keyframes sweep { from { left: -70%; } to { left: 125%; } }
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: inset 0 0 12px rgba(55,213,255,.1); }
-      50% { box-shadow: inset 0 0 30px rgba(55,213,255,.28); }
+      0%, 100% { box-shadow: inset 0 0 12px rgba(var(--accent-rgb),.1); }
+      50% { box-shadow: inset 0 0 30px rgba(var(--accent-rgb),.28); }
     }
     .pipe-step .pipe-img {
       width: 100%; height: 180px; object-fit: contain;
       border-radius: 5px; margin-top: 6px; display: none;
-      border: 1px solid #2b3d53; opacity: 0;
+      border: 1px solid var(--pipe-img-border); opacity: 0;
       transition: opacity .6s ease;
-      background: #07101a;
+      background: var(--pipe-img-bg);
     }
     .pipe-step.has-img .pipe-img { display: block; opacity: 1; }
     .pipe-step.has-img .pipe-desc { display: none; }
-    .pipe-step.done { border-color: #2ecc71; }
+    .pipe-step.done { border-color: var(--pipe-done); }
     .pipe-step.done::before {
       content: "✓"; position: absolute; top: 6px; right: 10px;
-      color: #2ecc71; font-weight: 900; font-size: 16px;
+      color: var(--pipe-done); font-weight: 900; font-size: 16px;
     }
     .pipe-label {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      color: #60768e; font-weight: 800; font-size: 14px;
+      color: var(--pipe-label); font-weight: 800; font-size: 14px;
     }
     .pipeline-window { height: auto; min-height: 420px; }
     .model-wrap {
       position: relative; height: 420px;
-      background: radial-gradient(ellipse at center, #0a1825 0%, #06111c 100%);
-      border: 1px solid #223247; border-radius: 8px; overflow: hidden;
+      background: radial-gradient(ellipse at center, var(--model-inner) 0%, var(--model-outer) 100%);
+      border: 1px solid var(--model-border); border-radius: 8px; overflow: hidden;
       transition: box-shadow .5s ease;
     }
     .model-wrap.model-active {
-      box-shadow: 0 0 30px rgba(55,213,255,.15), inset 0 0 20px rgba(55,213,255,.05);
+      box-shadow: 0 0 30px var(--model-glow), inset 0 0 20px var(--model-inner-glow);
     }
     .model-3d-container {
       width: 100%; height: 100%; display: flex;
       align-items: center; justify-content: center;
     }
     .model-3d-container canvas { display: block; width: 100% !important; height: 100% !important; }
-    .model-placeholder { color: #60768e; font-weight: 800; font-size: 14px; }
+    .model-placeholder { color: var(--model-ph); font-weight: 800; font-size: 14px; }
     #model3d { width: 100%; height: 100%; display: block; }
     .model-controls {
       position: absolute; bottom: 12px; right: 12px;
       display: flex; gap: 6px; z-index: 10;
     }
     .ctrl-btn {
-      border: 1px solid #2b3d53; background: rgba(7,16,26,.8);
-      color: #91a6bc; border-radius: 6px; padding: 5px 10px;
+      border: 1px solid var(--ctrl-border); background: var(--ctrl-bg);
+      color: var(--ctrl-text); border-radius: 6px; padding: 5px 10px;
       font-size: 11px; cursor: pointer; font-weight: 700;
       transition: all .2s ease;
     }
-    .ctrl-btn:hover { border-color: #37d5ff; color: #fff; }
-    .ctrl-btn.active { border-color: #37d5ff; background: rgba(55,213,255,.15); color: #37d5ff; }
+    .ctrl-btn:hover { border-color: var(--ctrl-h-border); color: var(--ctrl-h-text); }
+    .ctrl-btn.active { border-color: var(--ctrl-a-border); background: var(--ctrl-a-bg); color: var(--ctrl-a-text); }
     .model-hud {
       position: absolute;
       left: 12px;
@@ -374,16 +451,31 @@ INDEX_HTML = r"""<!doctype html>
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      color: #cfe9ff;
+      color: var(--hud-text);
       font-size: 12px;
       pointer-events: none;
     }
     .hud-chip {
-      border: 1px solid #2b3d53;
-      background: rgba(7, 16, 26, .72);
+      border: 1px solid var(--hud-border);
+      background: var(--hud-bg);
       border-radius: 8px;
       padding: 7px 9px;
     }
+    /* 主题切换按钮 */
+    .theme-toggle {
+      flex-shrink: 0;
+      border: 1px solid var(--theme-border);
+      background: var(--theme-bg);
+      color: var(--theme-text);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .25s;
+    }
+    .theme-toggle:hover { border-color: var(--mode-active-border); }
     @media (max-width: 980px) {
       .app { grid-template-columns: 1fr; }
       .top, .result-grid, .analysis-lab { grid-template-columns: 1fr; }
@@ -394,18 +486,41 @@ INDEX_HTML = r"""<!doctype html>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div>
-        <h1>Skin Recovery Assessor</h1>
-        <div class="muted">术前/术后图像配准 · 多维恢复评分 · 动态热力分析</div>
+      <div class="sidebar-header">
+        <div class="sidebar-header-text">
+          <h1>Skin Recovery Assessor</h1>
+          <div class="muted">术前/术后图像配准 · 多维恢复评分 · 动态热力分析</div>
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button" onclick="toggleTheme()">☀ 白色主题</button>
       </div>
 
       <section>
         <h2>分析对象</h2>
         <div class="mode-grid">
-          <button class="mode active" data-mode="face" type="button">人脸分析</button>
+          <button class="mode active" data-mode="face" type="button">人体皮肤分析</button>
           <button class="mode" data-mode="animal" type="button">动物皮肤分析</button>
         </div>
-        <p id="modeHint" class="muted">人脸模式：优先定位面部区域，并结合肤色 ROI 进行分析。</p>
+        <p id="modeHint" class="muted">人体皮肤模式：自动检测皮肤区域，支持面部或人体局部组织图像。</p>
+        <div id="speciesWrap" class="species-wrap">
+          <label for="speciesSelect">动物物种</label>
+          <select id="speciesSelect">
+            <option value="rabbit">兔子</option>
+            <option value="dog">狗</option>
+            <option value="pig">猪</option>
+            <option value="mouse">老鼠</option>
+          </select>
+          <div id="strainWrap" style="display:none">
+            <label for="strainSelect">老鼠品系</label>
+            <select id="strainSelect">
+              <option value="SD大鼠">SD大鼠</option>
+              <option value="Wistar大鼠">Wistar大鼠</option>
+              <option value="Zucker大鼠">Zucker大鼠</option>
+              <option value="BALB/c裸鼠">BALB/c裸鼠</option>
+              <option value="C57BL/6小鼠">C57BL/6小鼠</option>
+              <option value="SKH-1无毛小鼠">SKH-1无毛小鼠</option>
+            </select>
+          </div>
+        </div>
       </section>
 
       <section class="upload">
@@ -416,6 +531,19 @@ INDEX_HTML = r"""<!doctype html>
         <label for="postFile">选择术后照片</label>
         <input id="postFile" type="file" accept="image/jpeg,image/png,image/bmp,image/tiff,image/webp,image/heif,image/heic" />
         <div id="postName" class="file-name">术后：未选择</div>
+        <div class="dressing-wrap">
+          <label for="dressingTime">敷料使用时间（可选）</label>
+          <select id="dressingTime" disabled>
+            <option value="">请选择（可选）</option>
+            <option value="5min">5 min</option>
+            <option value="10min">10 min</option>
+            <option value="15min">15 min</option>
+            <option value="30min">30 min</option>
+            <option value="1h">1 h</option>
+            <option value="5h">5 h</option>
+            <option value="10h">10 h</option>
+          </select>
+        </div>
       </section>
 
       <button id="analyzeBtn" class="primary" type="button">开始进行分析</button>
@@ -505,6 +633,16 @@ INDEX_HTML = r"""<!doctype html>
   </div>
 
   <script>
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle("light");
+      document.getElementById("themeToggle").textContent = isLight ? "\u{1F319} 深色主题" : "\u2600 白色主题";
+      // 更新 3D 渲染器背景色
+      if (state.threeObj && state.threeObj.renderer) {
+        const cs = getComputedStyle(document.documentElement);
+        const clearColor = cs.getPropertyValue("--clear-color").trim();
+        state.threeObj.renderer.setClearColor(parseInt(clearColor.replace("#", "0x")));
+      }
+    }
     const state = {
       mode: "face", pre: null, post: null, timer: null,
       progress: 0, activeStep: 0, modelScore: null, lastPayload: null,
@@ -564,13 +702,22 @@ INDEX_HTML = r"""<!doctype html>
         document.querySelectorAll(".mode").forEach((item) => item.classList.remove("active"));
         btn.classList.add("active");
         state.mode = btn.dataset.mode;
-        const text = state.mode === "animal"
+        const isAnimal = state.mode === "animal";
+        const text = isAnimal
           ? "动物皮肤模式：使用更宽松的表面/纹理 ROI，适合宠物、实验动物或局部皮肤照片。"
-          : "人脸模式：优先定位面部区域，并结合肤色 ROI 进行分析。";
+          : "人体皮肤模式：自动检测皮肤区域，支持面部或人体局部组织图像。";
         $("modeHint").textContent = text;
+        $("speciesWrap").classList.toggle("visible", isAnimal);
+        if (isAnimal) { updateStrainVisibility(); }
         log(`切换分析对象：${btn.textContent}`);
       });
     });
+
+    $("speciesSelect").addEventListener("change", updateStrainVisibility);
+    function updateStrainVisibility() {
+      const isMouse = $("speciesSelect").value === "mouse";
+      $("strainWrap").style.display = isMouse ? "block" : "none";
+    }
 
     $("preFile").addEventListener("change", (event) => {
       state.pre = event.target.files[0];
@@ -581,7 +728,11 @@ INDEX_HTML = r"""<!doctype html>
     $("postFile").addEventListener("change", (event) => {
       state.post = event.target.files[0];
       $("postName").textContent = state.post ? `术后：${state.post.name}` : "术后：未选择";
-      if (state.post) { preview(state.post, "postPreview"); log(`已选择术后照片：${state.post.name}`); }
+      if (state.post) {
+        preview(state.post, "postPreview");
+        log(`已选择术后照片：${state.post.name}`);
+        $("dressingTime").disabled = false;
+      }
     });
 
     function beginFakeProgress() {
@@ -631,6 +782,16 @@ INDEX_HTML = r"""<!doctype html>
         form.append("mode", state.mode);
         form.append("pre", state.pre);
         form.append("post", state.post);
+        // 动物物种/品系参数
+        if (state.mode === "animal") {
+          form.append("animal_species", $("speciesSelect").value);
+          if ($("speciesSelect").value === "mouse") {
+            form.append("mouse_strain", $("strainSelect").value);
+          }
+        }
+        // 敷料时间参数
+        const dt = $("dressingTime").value;
+        if (dt) { form.append("dressing_time", dt); }
         log("正在AI智能诊断...");
         const response = await fetch("/api/analyze", { method: "POST", body: form });
         const payload = await response.json();
@@ -699,107 +860,143 @@ INDEX_HTML = r"""<!doctype html>
       }
     });
 
-    /* ======== Three.js 3D 皮肤恢复仿真建模 - 三维点云重建 ======== */
+    /* ======== Three.js 3D 皮肤恢复仿真建模 - 原图叠加网格+点云 ======== */
     function initThreeModel(payload) {
       const container = $("model3dContainer");
       container.innerHTML = "";
       $("modelWrap").classList.add("model-active");
       const W = container.clientWidth || 400, H = container.clientHeight || 380;
-      const fr = payload.face_region || { x: 0, y: 0, w: 1, h: 1, type: "full" };
-      const isProfile = fr.type === "profile";
-      const isPartial = fr.type === "partial";
 
       // ---- 场景 / 相机 / 渲染器 ----
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(36, W / H, 0.1, 100);
-      camera.position.set(0, 0.08, isProfile ? 3.8 : 4.5);
+      const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100);
+      camera.position.set(0, 0.15, 5.2);
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(W, H);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x06111c, 1);
+      const cs = getComputedStyle(document.documentElement);
+      const clearColor = cs.getPropertyValue("--clear-color").trim();
+      renderer.setClearColor(parseInt(clearColor.replace("#", "0x")));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
       container.appendChild(renderer.domElement);
 
-      // ---- 灯光系统 ----
-      scene.add(new THREE.AmbientLight(0x667788, 0.6));
-      const keyLight = new THREE.DirectionalLight(0xffeedd, 0.85);
+      // ---- 灯光 ----
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      const keyLight = new THREE.DirectionalLight(0xffeedd, 0.65);
       keyLight.position.set(3, 4, 5); scene.add(keyLight);
-      const fillLight = new THREE.DirectionalLight(0x8899bb, 0.35);
+      const fillLight = new THREE.DirectionalLight(0x8899bb, 0.25);
       fillLight.position.set(-3, 2, 3); scene.add(fillLight);
-      const rimLight = new THREE.PointLight(0x37d5ff, 0.7, 15);
+      const rimLight = new THREE.PointLight(0x37d5ff, 0.5, 15);
       rimLight.position.set(0, 0.5, -3.5); scene.add(rimLight);
 
-      // ---- 3D 人脸点云 (Open3D PointCloud 风格) ----
-      const faceGroup = new THREE.Group();
+      const modelGroup = new THREE.Group();
+      let texturedMesh = null;
+      let wireLines = null;
       let pointCloud = null;
-      let wireMesh = null;
 
-      if (payload.face_vertices && payload.face_vertices.length > 0) {
-        // 构建点云 BufferGeometry
-        const geo = new THREE.BufferGeometry();
-        const posArr = new Float32Array(payload.face_vertices.flat());
-        geo.setAttribute("position", new THREE.BufferAttribute(posArr, 3));
-        if (payload.face_colors && payload.face_colors.length > 0) {
-          const colArr = new Float32Array(payload.face_colors.flat());
-          geo.setAttribute("color", new THREE.BufferAttribute(colArr, 3));
-        }
-        const ptMat = new THREE.PointsMaterial({
-          size: 0.038, vertexColors: true,
-          sizeAttenuation: true, transparent: true, opacity: 0.93,
-        });
-        pointCloud = new THREE.Points(geo, ptMat);
-        faceGroup.add(pointCloud);
+      // ---- 推断网格尺寸 ----
+      const hasGrid = payload.grid_vertices && payload.grid_vertices.length > 0;
+      // 从 grid_vertices 数量反推 rows/cols
+      const totalVerts = hasGrid ? payload.grid_vertices.length : 0;
+      const gridSide = Math.round(Math.sqrt(totalVerts));  // 100
+      const gRows = gridSide, gCols = gridSide;
 
-        // 半透明线框支撑网格
-        const wireGeo = new THREE.PlaneGeometry(2.6, 3.2, 48, 48);
-        const wPos = wireGeo.attributes.position;
-        for (let i = 0; i < wPos.count; i++) {
-          const x = wPos.getX(i), y = wPos.getY(i);
-          const u = x / 1.3, v = y / 1.6;
-          const r2 = u*u + v*v*0.85;
-          let z = 0.48 * Math.exp(-r2 * 0.8);
-          z += 0.16 * Math.exp(-(u*u + (v-0.2)**2) / 0.028);
-          z += 0.07 * Math.exp(-((u-0.32)**2 + (v+0.12)**2) / 0.035);
-          z += 0.07 * Math.exp(-((u+0.32)**2 + (v+0.12)**2) / 0.035);
-          z -= 0.04 * Math.exp(-(u*u + (v-0.48)**2) / 0.022);
-          z += 0.04 * Math.exp(-(u*u*0.7 + (v-0.75)**2) / 0.055);
-          wPos.setZ(i, z);
+      if (hasGrid && gRows > 1 && gCols > 1) {
+        // 计算网格边界用于 UV 映射
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        for (let i = 0; i < totalVerts; i++) {
+          const v = payload.grid_vertices[i];
+          if (v[0] < minX) minX = v[0]; if (v[0] > maxX) maxX = v[0];
+          if (v[1] < minY) minY = v[1]; if (v[1] > maxY) maxY = v[1];
         }
-        wireGeo.computeVertexNormals();
-        wireMesh = new THREE.Mesh(wireGeo, new THREE.MeshBasicMaterial({
-          color: 0x37d5ff, wireframe: true, transparent: true, opacity: 0.14,
-        }));
-        wireMesh.visible = true;
-        faceGroup.add(wireMesh);
-      } else {
-        // 回退：前端生成点云
-        const rows = 80, cols = 64;
-        const positions = [], colors = [];
-        for (let r = 0; r < rows; r++) {
-          for (let c = 0; c < cols; c++) {
-            const u = (c / (cols-1)) * 2 - 1;
-            const v = (r / (rows-1)) * 2 - 1;
-            const r2 = u*u + v*v*0.85;
-            let z = 0.48 * Math.exp(-r2*0.8);
-            z += 0.16 * Math.exp(-(u*u + (v-0.2)**2)/0.028);
-            z -= 0.04 * Math.exp(-(u*u + (v-0.48)**2)/0.022);
-            positions.push(u * 1.3, v * 1.6, z);
-            colors.push(0.84, 0.64, 0.54);
+        const rangeX = maxX - minX || 1, rangeY = maxY - minY || 1;
+
+        // ---- 构建纹理化网格面 (原图贴在平面上) ----
+        const meshGeo = new THREE.BufferGeometry();
+        const posArr = new Float32Array(totalVerts * 3);
+        const uvArr = new Float32Array(totalVerts * 2);
+        for (let i = 0; i < totalVerts; i++) {
+          const v = payload.grid_vertices[i];
+          posArr[i*3]   = v[0];
+          posArr[i*3+1] = v[1];
+          posArr[i*3+2] = v[2];
+          // UV: col → u (0..1), row → v (1..0 因为图像 y 轴向下)
+          const col = i % gCols, row = Math.floor(i / gCols);
+          uvArr[i*2]   = col / (gCols - 1);
+          uvArr[i*2+1] = 1.0 - row / (gRows - 1);
+        }
+        meshGeo.setAttribute("position", new THREE.BufferAttribute(posArr, 3));
+        meshGeo.setAttribute("uv", new THREE.BufferAttribute(uvArr, 2));
+
+        // 生成三角形索引
+        const idxArr = [];
+        for (let r = 0; r < gRows - 1; r++) {
+          for (let c = 0; c < gCols - 1; c++) {
+            const i = r * gCols + c;
+            idxArr.push(i, i + 1, i + gCols);
+            idxArr.push(i + 1, i + gCols + 1, i + gCols);
           }
         }
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-        geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-        pointCloud = new THREE.Points(geo, new THREE.PointsMaterial({
-          size: 0.038, vertexColors: true, sizeAttenuation: true,
+        meshGeo.setIndex(idxArr);
+        meshGeo.computeVertexNormals();
+
+        // 加载纹理贴图
+        const texLoader = new THREE.TextureLoader();
+        const texture = texLoader.load(payload.grid_texture || "");
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+
+        const meshMat = new THREE.MeshStandardMaterial({
+          map: texture, side: THREE.DoubleSide,
+          roughness: 0.75, metalness: 0.05,
+        });
+        texturedMesh = new THREE.Mesh(meshGeo, meshMat);
+        modelGroup.add(texturedMesh);
+
+        // ---- 叠加网格线框 (略微前移避免 z-fighting) ----
+        if (payload.wire_indices && payload.wire_indices.length > 0) {
+          const wireGeo = new THREE.BufferGeometry();
+          const wLen = payload.wire_indices.length;
+          const wirePos = new Float32Array(wLen * 3);
+          for (let i = 0; i < wLen; i++) {
+            const idx = payload.wire_indices[i];
+            wirePos[i*3]   = payload.grid_vertices[idx][0];
+            wirePos[i*3+1] = payload.grid_vertices[idx][1];
+            wirePos[i*3+2] = payload.grid_vertices[idx][2] + 0.005;
+          }
+          wireGeo.setAttribute("position", new THREE.BufferAttribute(wirePos, 3));
+          wireLines = new THREE.LineSegments(wireGeo, new THREE.LineBasicMaterial({
+            color: 0x37d5ff, transparent: true, opacity: 0.22,
+          }));
+          wireLines.visible = true;
+          modelGroup.add(wireLines);
+        }
+
+        // ---- 网格顶点小点云（可选，增加立体感）----
+        const dotGeo = new THREE.BufferGeometry();
+        const dotPos = new Float32Array(totalVerts * 3);
+        for (let i = 0; i < totalVerts; i++) {
+          dotPos[i*3]   = payload.grid_vertices[i][0];
+          dotPos[i*3+1] = payload.grid_vertices[i][1];
+          dotPos[i*3+2] = payload.grid_vertices[i][2] + 0.008;
+        }
+        dotGeo.setAttribute("position", new THREE.BufferAttribute(dotPos, 3));
+        pointCloud = new THREE.Points(dotGeo, new THREE.PointsMaterial({
+          size: 0.018, color: 0x37d5ff,
+          sizeAttenuation: true, transparent: true, opacity: 0.35,
         }));
-        faceGroup.add(pointCloud);
-        wireMesh = new THREE.Mesh(); wireMesh.visible = false;
-        faceGroup.add(wireMesh);
+        pointCloud.visible = false;
+        modelGroup.add(pointCloud);
+
+      } else {
+        // 回退
+        texturedMesh = new THREE.Mesh(); modelGroup.add(texturedMesh);
+        wireLines = new THREE.LineSegments(); wireLines.visible = false; modelGroup.add(wireLines);
+        pointCloud = new THREE.Points(); modelGroup.add(pointCloud);
       }
 
-      // ---- 关键特征点标注 ----
+      // ---- 高频特征点标注（醒目颜色 + 光晕）----
       if (payload.feature_points && payload.feature_points.positions && payload.feature_points.positions.length > 0) {
         const fpGeo = new THREE.BufferGeometry();
         const fpPos = new Float32Array(payload.feature_points.positions.flat());
@@ -808,85 +1005,59 @@ INDEX_HTML = r"""<!doctype html>
           const fpCol = new Float32Array(payload.feature_points.colors.flat());
           fpGeo.setAttribute("color", new THREE.BufferAttribute(fpCol, 3));
         }
-        const fpMat = new THREE.PointsMaterial({
-          size: 0.12, vertexColors: true,
+        const featureCloud = new THREE.Points(fpGeo, new THREE.PointsMaterial({
+          size: 0.10, vertexColors: true,
           sizeAttenuation: true, transparent: true, opacity: 1.0,
-        });
-        const featureCloud = new THREE.Points(fpGeo, fpMat);
-        faceGroup.add(featureCloud);
-        // 特征点光环
+        }));
+        modelGroup.add(featureCloud);
+        // 光晕层
         const glowGeo = new THREE.BufferGeometry();
-        glowGeo.setAttribute("position", new THREE.BufferAttribute(fpPos.slice(), 3));
-        const glowMat = new THREE.PointsMaterial({
-          size: 0.22, vertexColors: true,
-          sizeAttenuation: true, transparent: true, opacity: 0.3,
-        });
-        const glowCloud = new THREE.Points(glowGeo, glowMat);
+        const glowPos = new Float32Array(fpPos.length);
+        for (let i = 0; i < fpPos.length; i += 3) {
+          glowPos[i] = fpPos[i]; glowPos[i+1] = fpPos[i+1]; glowPos[i+2] = fpPos[i+2] + 0.01;
+        }
+        glowGeo.setAttribute("position", new THREE.BufferAttribute(glowPos, 3));
         if (payload.feature_points.colors && payload.feature_points.colors.length > 0) {
           const glowCol = new Float32Array(payload.feature_points.colors.flat());
           glowGeo.setAttribute("color", new THREE.BufferAttribute(glowCol, 3));
         }
-        faceGroup.add(glowCloud);
-      }
-      if (payload.back_vertices && payload.back_vertices.length > 0) {
-        const backGeo = new THREE.BufferGeometry();
-        const backPosArr = new Float32Array(payload.back_vertices.flat());
-        backGeo.setAttribute("position", new THREE.BufferAttribute(backPosArr, 3));
-        if (payload.back_colors && payload.back_colors.length > 0) {
-          const backColArr = new Float32Array(payload.back_colors.flat());
-          backGeo.setAttribute("color", new THREE.BufferAttribute(backColArr, 3));
-        }
-        const backPtMat = new THREE.PointsMaterial({
-          size: 0.038, vertexColors: true,
-          sizeAttenuation: true, transparent: true, opacity: 0.93,
-        });
-        const backCloud = new THREE.Points(backGeo, backPtMat);
-        faceGroup.add(backCloud);
+        modelGroup.add(new THREE.Points(glowGeo, new THREE.PointsMaterial({
+          size: 0.20, vertexColors: true,
+          sizeAttenuation: true, transparent: true, opacity: 0.30,
+        })));
       }
 
-      // 外发光环
-      const ringGeo = new THREE.TorusGeometry(2.1, 0.015, 16, 120);
-      const ringMat = new THREE.MeshBasicMaterial({ color: 0x37d5ff, transparent: true, opacity: 0.35 });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      ring.position.z = -0.6;
-      faceGroup.add(ring);
-
-      // 底座光晕盘
-      const baseGeo = new THREE.CircleGeometry(1.8, 64);
-      const baseMat = new THREE.MeshBasicMaterial({ color: 0x37d5ff, transparent: true, opacity: 0.06, side: THREE.DoubleSide });
-      const base = new THREE.Mesh(baseGeo, baseMat);
-      base.rotation.x = -Math.PI / 2; base.position.y = -1.8;
-      faceGroup.add(base);
-
-      scene.add(faceGroup);
+      scene.add(modelGroup);
 
       // ---- 粒子系统 ----
-      const pCount = 800;
+      const pCount = 500;
       const pGeo = new THREE.BufferGeometry();
       const pPos = new Float32Array(pCount * 3), pCol = new Float32Array(pCount * 3);
       for (let i = 0; i < pCount; i++) {
-        const a = Math.random() * Math.PI * 2, rad = 2.2 + Math.random() * 2.5;
+        const a = Math.random() * Math.PI * 2, rad = 2.8 + Math.random() * 1.8;
         pPos[i*3] = Math.cos(a) * rad;
-        pPos[i*3+1] = (Math.random() - 0.5) * 4;
-        pPos[i*3+2] = Math.sin(a) * rad - 1.5;
+        pPos[i*3+1] = (Math.random() - 0.5) * 3;
+        pPos[i*3+2] = Math.sin(a) * rad - 1.0;
         const gold = Math.random() > 0.55;
         pCol[i*3] = gold ? 0.97 : 0.22; pCol[i*3+1] = gold ? 0.82 : 0.84; pCol[i*3+2] = gold ? 0.33 : 1.0;
       }
       pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
       pGeo.setAttribute("color", new THREE.BufferAttribute(pCol, 3));
       const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
-        size: 0.022, vertexColors: true, transparent: true, opacity: 0.5,
+        size: 0.018, vertexColors: true, transparent: true, opacity: 0.4,
       }));
       scene.add(particles);
 
-      // ---- 鼠标拖拽旋转 ----
+      // ---- 鼠标拖拽旋转（±45度）----
+      const MAX_ROT = Math.PI / 4;
       let dragging = false, prevMX = 0, prevMY = 0, rotY = 0, rotX = 0;
       renderer.domElement.addEventListener("pointerdown", e => { dragging = true; prevMX = e.clientX; prevMY = e.clientY; renderer.domElement.style.cursor = "grabbing"; });
       renderer.domElement.addEventListener("pointermove", e => {
         if (!dragging) return;
-        rotY += (e.clientX - prevMX) * 0.006;
+        rotY += (e.clientX - prevMX) * 0.005;
         rotX += (e.clientY - prevMY) * 0.004;
-        rotX = Math.max(-0.6, Math.min(0.6, rotX));
+        rotY = Math.max(-MAX_ROT, Math.min(MAX_ROT, rotY));
+        rotX = Math.max(-MAX_ROT, Math.min(MAX_ROT, rotX));
         prevMX = e.clientX; prevMY = e.clientY;
       });
       const stopDrag = () => { dragging = false; renderer.domElement.style.cursor = "grab"; };
@@ -900,26 +1071,24 @@ INDEX_HTML = r"""<!doctype html>
         requestAnimationFrame(animate);
         frame++;
         const t = frame * 0.01;
-        if (!dragging) rotY += 0.003;
-        faceGroup.rotation.y += (rotY - faceGroup.rotation.y) * 0.08;
-        faceGroup.rotation.x += (rotX - faceGroup.rotation.x) * 0.08;
-        // 点云呼吸效果
-        if (pointCloud && pointCloud.material) {
-          pointCloud.material.size = 0.038 + Math.sin(t * 1.5) * 0.004;
+        if (!dragging) {
+          rotY = MAX_ROT * Math.sin(t * 0.35);
+          rotX = MAX_ROT * 0.25 * Math.sin(t * 0.25);
         }
-        // 光环脉冲
-        ringMat.opacity = 0.25 + Math.sin(t * 1.8) * 0.12;
-        ring.rotation.z = t * 0.15;
-        baseMat.opacity = 0.04 + Math.sin(t * 1.5) * 0.02;
+        modelGroup.rotation.y += (rotY - modelGroup.rotation.y) * 0.08;
+        modelGroup.rotation.x += (rotX - modelGroup.rotation.x) * 0.08;
+        // 网格点呼吸
+        if (pointCloud && pointCloud.material) {
+          pointCloud.material.opacity = 0.25 + Math.sin(t * 1.5) * 0.10;
+        }
         // 粒子旋转
-        particles.rotation.y = t * 0.1;
-        particles.rotation.x = Math.sin(t * 0.25) * 0.04;
-        // 轮光动态
-        rimLight.intensity = 0.65 + Math.sin(t * 2) * 0.15;
+        particles.rotation.y = t * 0.08;
+        particles.rotation.x = Math.sin(t * 0.2) * 0.03;
+        rimLight.intensity = 0.45 + Math.sin(t * 2) * 0.12;
         renderer.render(scene, camera);
       }
       animate();
-      state.threeObj = { scene, camera, renderer, pointCloud, wireMesh };
+      state.threeObj = { scene, camera, renderer, pointCloud: pointCloud, wireMesh: wireLines };
       // 窗口 resize
       const ro = new ResizeObserver(() => {
         const w = container.clientWidth, h = container.clientHeight;
@@ -1073,173 +1242,126 @@ def image_to_data_uri(rgb: np.ndarray, max_side: int = 950) -> str:
     return "data:image/jpeg;base64," + data
 
 
-def _face_depth(uu: np.ndarray, vv: np.ndarray) -> np.ndarray:
-    """计算面部三维深度值（图像坐标：vv=-1 顶部/额头，vv=+1 底部/下巴）。"""
-    r2 = uu**2 + vv**2 * 0.85
-    zz = 0.48 * np.exp(-r2 * 0.8)
-    # 鼻子（vv=0.2 = 面部中央偏下）
-    zz += 0.16 * np.exp(-(uu**2 + (vv - 0.2)**2) / 0.028)
-    # 额骨隆起（vv=-0.55 = 额头）
-    zz += 0.06 * np.exp(-(uu**2 * 0.7 + (vv + 0.55)**2) / 0.055)
-    # 下巴隆起（vv=0.75）
-    zz += 0.04 * np.exp(-(uu**2 * 0.7 + (vv - 0.75)**2) / 0.055)
-    # 左颧骨
-    zz += 0.07 * np.exp(-((uu - 0.32)**2 + (vv + 0.12)**2) / 0.035)
-    # 右颧骨
-    zz += 0.07 * np.exp(-((uu + 0.32)**2 + (vv + 0.12)**2) / 0.035)
-    # 左眼窝
-    zz -= 0.055 * np.exp(-((uu - 0.28)**2 + (vv - 0.02)**2) / 0.018)
-    # 右眼窝
-    zz -= 0.055 * np.exp(-((uu + 0.28)**2 + (vv - 0.02)**2) / 0.018)
-    # 嘴巴凹槽（vv=0.48）
-    zz -= 0.04 * np.exp(-(uu**2 + (vv - 0.48)**2) / 0.022)
-    # 人中
-    zz += 0.05 * np.exp(-(uu**2 + (vv - 0.34)**2) / 0.045)
-    # 太阳穴
-    zz += 0.04 * np.exp(-((uu - 0.55)**2 + (vv + 0.1)**2) / 0.06)
-    zz += 0.04 * np.exp(-((uu + 0.55)**2 + (vv + 0.1)**2) / 0.06)
-    return zz
+def build_3d_image_points(ref_img: np.ndarray, rows: int = 100, cols: int = 100,
+                          n_features: int = 120) -> dict:
+    """基于输入图像的网格化点云生成。
 
-
-def build_3d_face_points(rows: int = 80, cols: int = 64,
-                         ref_img: Optional[np.ndarray] = None,
-                         face_region: Optional[dict] = None) -> dict:
-    """构建三维人脸点云 + 后脑点云，形成立体头部。
-    依据输入图像的人脸检测结果调整模型比例，并用图像亮度调制深度细节。
+    1. 将图像划分为规则网格，每个网格点作为一个点云顶点
+    2. 利用 Laplacian 算子检测高频区域，用亮度信息计算深度
+    3. 从高频区域随机选取特征点，用醒目颜色标识
     """
-    face_w, face_h = 2.6, 3.2
-
-    # 根据人脸检测结果调整模型宽高比
-    if face_region and face_region.get('w', 0) > 0 and face_region.get('h', 0) > 0:
-        aspect = face_region['w'] / max(face_region['h'], 0.01)
-        # 标准脸宽高比 ≈ 0.75，按偏差调整
-        deviation = aspect / 0.75
-        face_w = 2.6 * np.clip(deviation, 0.82, 1.18)
-
-    hw, hh = face_w / 2, face_h / 2
+    ih, iw = ref_img.shape[:2]
+    # 归一化坐标 -1..1
     u = np.linspace(-1, 1, cols)
     v = np.linspace(-1, 1, rows)
     uu, vv = np.meshgrid(u, v)
-    xx = uu.copy()
-    yy = -vv.copy()  # 图像坐标 → 显示坐标：翻转 y 轴
 
-    # 脸型轮廓：下巴处（vv>0.1）收窄
-    jaw_taper = 1.0 - 0.42 * np.power(np.maximum(0, vv - 0.1), 1.4)
-    cheek_w = 1.0 + 0.06 * np.exp(-np.power(vv + 0.15, 2) / 0.12)
-    xx = xx * np.maximum(0.12, jaw_taper) * cheek_w
+    # 图像缩放到网格尺寸，用于采样颜色和亮度
+    small = cv2.resize(ref_img, (cols, rows), interpolation=cv2.INTER_AREA)
+    gray = cv2.cvtColor(small, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
 
-    zz = _face_depth(uu, vv)
+    # 高频检测：Laplacian 响应
+    laplacian = cv2.Laplacian(gray.astype(np.float32), cv2.CV_32F, ksize=3)
+    lap_abs = np.abs(laplacian)
 
-    # 用图像亮度信息调制深度：亮区（额头/鼻梁）凸起，暗区（眼窝/鼻翼）凹陷
-    if ref_img is not None and ref_img.size > 0:
-        gray = cv2.cvtColor(ref_img, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255.0
-        gray_small = cv2.resize(gray, (cols, rows), interpolation=cv2.INTER_AREA)
-        # 亮度偏离均值部分作为深度细节（平滑处理后取低频成分）
-        gray_smooth = cv2.GaussianBlur(gray_small, (5, 5), 1.0)
-        brightness_detail = (gray_smooth - 0.5) * 0.06
-        zz = zz + brightness_detail
+    # Sobel 边缘（补充高频信息）
+    sobel_x = cv2.Sobel(gray.astype(np.float32), cv2.CV_32F, 1, 0, ksize=3)
+    sobel_y = cv2.Sobel(gray.astype(np.float32), cv2.CV_32F, 0, 1, ksize=3)
+    edge_mag = np.sqrt(sobel_x ** 2 + sobel_y ** 2)
 
-    xx = xx * hw
-    yy = yy * hh
+    # 综合高频响应
+    hf_response = 0.6 * lap_abs + 0.4 * edge_mag
+    hf_norm = hf_response / max(hf_response.max(), 1e-6)
 
-    front_verts = np.column_stack([xx.ravel(), yy.ravel(), zz.ravel()])
+    # 深度计算：基于亮度 + 高频响应
+    gray_smooth = cv2.GaussianBlur(gray, (7, 7), 1.2)
+    depth = (gray_smooth - 0.5) * 0.15 + hf_norm * 0.08
+    # 轻微平滑让深度更自然
+    depth = cv2.GaussianBlur(depth, (3, 3), 0.5)
 
-    # 从参考图像采样正面顶点颜色
-    if ref_img is not None and ref_img.size > 0:
-        ih, iw = ref_img.shape[:2]
-        cu = ((uu.ravel() + 1) * 0.5 * (iw - 1)).astype(int).clip(0, iw - 1)
-        cv_ = ((vv.ravel() + 1) * 0.5 * (ih - 1)).astype(int).clip(0, ih - 1)
-        front_colors = (ref_img[cv_, cu].astype(np.float32) / 255.0).clip(0, 1)
+    # 根据图像宽高比调整显示范围
+    aspect = iw / max(ih, 1)
+    if aspect > 1:
+        hw, hh = 2.0, 2.0 / aspect
     else:
-        n = len(front_verts)
-        base = np.array([0.84, 0.64, 0.54], dtype=np.float32)
-        front_colors = np.tile(base, (n, 1))
+        hw, hh = 2.0 * aspect, 2.0
+    xx = uu * hw
+    yy = -vv * hh  # 翻转 y 轴
 
-    # ---- 关键特征点：鼻尖、双眼、嘴角、下巴、额头 ----
-    # 图像坐标：vv=-1 顶/额头，vv=+1 底/下巴
-    feature_specs = [
-        # (name, uu, vv, color_rgb_01)
-        ("鼻尖",    0.0,   0.20, [1.0, 0.25, 0.25]),    # 红
-        ("左眼",   -0.28, -0.02, [0.25, 0.85, 1.0]),    # 青
-        ("右眼",    0.28, -0.02, [0.25, 0.85, 1.0]),    # 青
-        ("左嘴角", -0.18,  0.48, [1.0, 0.85, 0.15]),    # 黄
-        ("右嘴角",  0.18,  0.48, [1.0, 0.85, 0.15]),    # 黄
-        ("下巴",    0.0,   0.78, [0.40, 1.0, 0.40]),    # 绿
-        ("额头",    0.0,  -0.55, [0.85, 0.55, 1.0]),    # 紫
-        ("左颚骨", -0.52,  0.10, [1.0, 0.65, 0.20]),    # 橙
-        ("右颚骨",  0.52,  0.10, [1.0, 0.65, 0.20]),    # 橙
-    ]
-    feat_positions, feat_colors = [], []
-    for name, fu, fv, fc in feature_specs:
-        fx = fu * max(0.12, 1.0 - 0.42 * max(0, fv - 0.1)**1.4) * (1.0 + 0.06 * np.exp(-(fv + 0.15)**2 / 0.12)) * hw
-        fy = -fv * hh  # 显示坐标
-        fz = float(_face_depth(np.array([fu]), np.array([fv]))[0])
-        feat_positions.append([float(fx), float(fy), float(fz)])
-        feat_colors.append(fc)
-    feature_points = {"positions": feat_positions, "colors": feat_colors}
+    # 构建点云
+    positions = np.column_stack([xx.ravel(), yy.ravel(), depth.ravel()])
+    colors = (small.reshape(-1, 3).astype(np.float32) / 255.0).clip(0, 1)
 
-    # ---- 后脑建模：半椭球壳，与正面无缝衔接 ----
-    back_rows, back_cols = 60, 48
-    bu = np.linspace(-1, 1, back_cols)
-    bv = np.linspace(-1, 1, back_rows)
-    buu, bvv = np.meshgrid(bu, bv)
-    # 半球深度：中心最凸，边缘趋向 0（与正面边缘对齐）
-    r_back = np.sqrt(buu**2 + bvv**2 * 0.85)
-    back_depth = -0.38 * np.sqrt(np.maximum(0, 1 - np.minimum(r_back, 1.0)**2))
-    # 颅骨后部微微凸起
-    back_depth += 0.06 * np.exp(-(buu**2 + (bvv + 0.3)**2) / 0.5)
-    # 应用同样的脸型轮廓
-    bxx = buu.copy()
-    byy = -bvv.copy()
-    bjaw = 1.0 - 0.42 * np.power(np.maximum(0, bvv - 0.1), 1.4)
-    bcheek = 1.0 + 0.06 * np.exp(-np.power(bvv + 0.15, 2) / 0.12)
-    bxx = bxx * np.maximum(0.12, bjaw) * bcheek
-    bxx = bxx * hw
-    byy = byy * hh
-    back_verts = np.column_stack([bxx.ravel(), byy.ravel(), back_depth.ravel()])
+    # ---- 高频特征点选取 ----
+    # 找高频响应较高的网格点
+    hf_flat = hf_norm.ravel()
+    threshold = np.percentile(hf_flat, 85)  # 取前 15% 高频点
+    high_freq_indices = np.where(hf_flat > threshold)[0]
 
-    # 后脑颜色：肤色渐变到深色（模拟头发/头皮）
-    n_back = len(back_verts)
-    back_colors = np.zeros((n_back, 3), dtype=np.float32)
-    if ref_img is not None and ref_img.size > 0:
-        edge_r = np.sqrt(buu.ravel()**2 + bvv.ravel()**2)
-        edge_factor = np.clip(edge_r / 0.9, 0, 1)
-        skin_base = front_colors.mean(axis=0)
-        dark = np.array([0.18, 0.13, 0.10], dtype=np.float32)
-        for i in range(3):
-            back_colors[:, i] = skin_base[i] * (1 - edge_factor) + dark[i] * edge_factor
+    # 从高频点中随机选取 n_features 个
+    if len(high_freq_indices) > n_features:
+        rng = np.random.default_rng(42)
+        selected = rng.choice(high_freq_indices, size=n_features, replace=False)
     else:
-        back_colors[:] = [0.28, 0.22, 0.18]
+        selected = high_freq_indices
 
-    logging.info("[3D PointCloud] 正面 %d + 后脑 %d = %d 顶点",
-                 len(front_verts), n_back, len(front_verts) + n_back)
+    # 特征点颜色：根据高频响应强度使用不同醒目颜色
+    feature_positions = []
+    feature_colors = []
+    for idx in selected:
+        pos = positions[idx]
+        feature_positions.append(pos.tolist())
+        # 高频强度映射到颜色：弱高频=青色，中高频=黄色，强高频=红色
+        strength = hf_flat[idx]
+        if strength > 0.7:
+            fc = [1.0, 0.15, 0.15]   # 红 - 强高频
+        elif strength > 0.4:
+            fc = [1.0, 0.85, 0.15]   # 黄 - 中高频
+        else:
+            fc = [0.15, 0.85, 1.0]   # 青 - 弱高频
+        feature_colors.append(fc)
+
+    # 网格线框数据（用于融合模式显示）
+    wire_positions = positions.tolist()
+    wire_indices = []
+    for r in range(rows - 1):
+        for c in range(cols - 1):
+            i = r * cols + c
+            wire_indices.extend([i, i + 1, i, i + cols])
+
+    logging.info("[3D PointCloud] 网格 %dx%d=%d 点, 高频特征点 %d 个",
+                 rows, cols, len(positions), len(feature_positions))
 
     return {
-        "positions": front_verts.tolist(),
-        "colors": front_colors.tolist(),
-        "back_positions": back_verts.tolist(),
-        "back_colors": back_colors.tolist(),
-        "feature_points": feature_points,
+        "positions": positions.tolist(),
+        "colors": colors.tolist(),
+        "wire_indices": wire_indices,
+        "feature_points": {
+            "positions": feature_positions,
+            "colors": feature_colors,
+        },
     }
 
 
-def make_payload(pre_img: np.ndarray, post_img: np.ndarray, mode: str) -> Dict[str, Any]:
-    result = analyze(pre_img, post_img, mode=mode)
-    # 构建三维人脸点云 (Open3D PointCloud 风格)
+def make_payload(pre_img: np.ndarray, post_img: np.ndarray, mode: str,
+                 animal_species: str = "", mouse_strain: str = "",
+                 dressing_time: str = "") -> Dict[str, Any]:
+    result = analyze(pre_img, post_img, mode=mode,
+                     animal_species=animal_species, mouse_strain=mouse_strain,
+                     dressing_time=dressing_time)
+    # 构建基于图像的三维网格点云
     try:
-        point_data = build_3d_face_points(rows=80, cols=64, ref_img=result.aligned_post,
-                                             face_region=result.face_region)
-        face_verts = point_data["positions"]
-        face_colors = point_data["colors"]
-        back_verts = point_data["back_positions"]
-        back_colors = point_data["back_colors"]
+        point_data = build_3d_image_points(ref_img=result.aligned_post,
+                                           rows=100, cols=100, n_features=120)
+        grid_verts = point_data["positions"]
+        grid_colors = point_data["colors"]
+        wire_indices = point_data["wire_indices"]
         feat_pts = point_data["feature_points"]
     except Exception as exc:
         logging.warning("3D point cloud build failed: %s", exc)
-        face_verts = []
-        face_colors = []
-        back_verts = []
-        back_colors = []
+        grid_verts = []
+        grid_colors = []
+        wire_indices = []
         feat_pts = {"positions": [], "colors": []}
     return {
         "ok": True,
@@ -1249,25 +1371,10 @@ def make_payload(pre_img: np.ndarray, post_img: np.ndarray, mode: str) -> Dict[s
         "overlay_image": image_to_data_uri(result.overlay_image),
         "radar_image": image_to_data_uri(result.radar_image),
         "comparison_radar": image_to_data_uri(result.comparison_radar) if result.comparison_radar is not None else "",
-        "face_texture": image_to_data_uri(result.aligned_post, max_side=512),
-        "displacement_map": image_to_data_uri(
-            cv2.cvtColor(
-                overlay_heatmap(
-                    np.full_like(result.aligned_post, 128),
-                    np.clip(
-                        sum(result.heatmaps.values()) / len(result.heatmaps), 0, 1
-                    ),
-                    result.skin_mask,
-                    alpha=0.9,
-                ),
-                cv2.COLOR_RGB2GRAY,
-            ),
-            max_side=256,
-        ),
-        "face_vertices": face_verts,
-        "face_colors": face_colors,
-        "back_vertices": back_verts,
-        "back_colors": back_colors,
+        "grid_texture": image_to_data_uri(result.aligned_post, max_side=512),
+        "grid_vertices": grid_verts,
+        "grid_colors": grid_colors,
+        "wire_indices": wire_indices,
         "feature_points": feat_pts,
         "heatmaps": {
             name: image_to_data_uri(colorize_heatmap(hm), max_side=320)
@@ -1348,11 +1455,21 @@ class SkinRecoveryHandler(BaseHTTPRequestHandler):
             mode_field = form.get("mode")
             mode = mode_field.value if hasattr(mode_field, "value") else "face"
             mode = mode if mode in MODE_LABELS else "face"
+            # 提取动物物种/品系/敷料时间参数
+            def _field(name, default=""):
+                f = form.get(name)
+                return f.value if hasattr(f, "value") and f.value else default
+            animal_species = _field("animal_species")
+            mouse_strain = _field("mouse_strain")
+            dressing_time = _field("dressing_time")
             pre_img = image_from_upload(form["pre"])
             post_img = image_from_upload(form["post"])
-            print(f"[SkinRecovery] analyze request mode={MODE_LABELS[mode]}", flush=True)
+            print(f"[SkinRecovery] analyze request mode={MODE_LABELS[mode]} species={animal_species} strain={mouse_strain} dressing={dressing_time}", flush=True)
             started = time.time()
-            payload = make_payload(pre_img, post_img, mode)
+            payload = make_payload(pre_img, post_img, mode,
+                                   animal_species=animal_species,
+                                   mouse_strain=mouse_strain,
+                                   dressing_time=dressing_time)
             print(f"[SkinRecovery] analyze done score={payload['overall_score']:.2f} cost={time.time() - started:.2f}s", flush=True)
             self.send_json(200, payload)
         except Exception as exc:
